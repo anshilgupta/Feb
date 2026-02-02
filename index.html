@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Be My Valentine 💖</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      font-family: system-ui, -apple-system;
+    }
+
+    .card {
+      background: white;
+      padding: 26px 22px;
+      border-radius: 22px;
+      text-align: center;
+      width: 92%;
+      max-width: 360px;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.18);
+    }
+
+    h1 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    p {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 14px;
+    }
+
+    .emotion {
+      font-size: 15px;
+      color: #ff4d6d;
+      min-height: 44px;
+      margin-bottom: 18px;
+      font-weight: 500;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 12px 26px;
+      border-radius: 30px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #yesBtn {
+      background: #ff4d6d;
+      color: white;
+      box-shadow: 0 8px 18px rgba(255,77,109,0.4);
+    }
+
+    #noBtn {
+      background: #e0e0e0;
+      color: #333;
+    }
+
+    /* Final yes button */
+    .final-yes-btn {
+      background: #ff4d6d;
+      color: white;
+      border: none;
+      padding: 14px 30px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(255,77,109,0.45);
+      animation: pulse 1.3s infinite;
+    }
+
+    .tap-hint {
+      font-size: 12px;
+      color: #999;
+      margin-top: 8px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="card">
+    <h1 id="title"></h1>
+    <p>You make everything better just by being you 💕</p>
+
+    <div class="emotion" id="emotion"></div>
+
+    <div class="buttons" id="buttons">
+      <button id="yesBtn">Yes 💖</button>
+      <button id="noBtn">No</button>
+    </div>
+  </div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const name = params.get("name") || "Love";
+  document.getElementById("title").innerText =
+    `${name}, will you be my Valentine? ❤️`;
+
+  const emotionDiv = document.getElementById("emotion");
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+  const buttonsDiv = document.getElementById("buttons");
+
+  let msgIndex = 0;
+
+  const noMessages = [
+    "Sacchi?? 🥺🥺",
+    "Mai ro dunga 😭",
+    "Plss naa yes kr do 🥲🥲",
+    "Betuu mai KitKat dilauga 🥺😭",
+    "Jao gussa ho rhe hum phir 🥺"
+  ];
+
+  noBtn.addEventListener("click", () => {
+    emotionDiv.innerText = noMessages[msgIndex];
+    msgIndex++;
+
+    if (msgIndex === noMessages.length) {
+      setTimeout(showFinalYesButton, 600);
+    }
+  });
+
+  yesBtn.addEventListener("click", showYesResult);
+
+  function showFinalYesButton() {
+    buttonsDiv.innerHTML = `
+      <div>
+        <button class="final-yes-btn" id="finalYesBtn">
+          mana lo🥲
+        </button>
+        <div class="tap-hint">💕</div>
+      </div>
+    `;
+
+    document
+      .getElementById("finalYesBtn")
+      .addEventListener("click", showYesResult);
+  }
+
+  function showYesResult() {
+    confetti({
+      particleCount: 180,
+      spread: 90,
+      origin: { y: 0.6 }
+    });
+
+    document.getElementById("card").innerHTML = `
+      <h1>💖 Yay ${name}! 💖</h1>
+
+      <p style="font-size:14px; line-height:1.6; color:#555;">
+        I thought you are having a hectic day,<br>
+        may this message bring <b>ittu si smile</b> on your face 🥺💖<br><br>
+
+        Honestly, <b>you are too cute</b> 😭💕<br>
+        aur <b>aapka chehra</b> mere aankhon mein<br>
+        hamesha rehta hai 🥰
+      </p>
+
+      <p style="margin-top:14px; font-size:18px; font-weight:600; color:#ff4d6d;">
+        Congratulations 🎉💖
+      </p>
+
+      <p>Happy Valentine’s Day 💕</p>
+    `;
+  }
+</script> 
+
+</body>
+</html>
