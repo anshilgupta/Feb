@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Valentine 💖</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    body {
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    .card {
+      background: #fff;
+      padding: 40px;
+      border-radius: 22px;
+      text-align: center;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+      width: 330px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 22px;
+      color: #333;
+    }
+
+    p {
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    .buttons {
+      position: relative;
+      height: 100px;
+    }
+
+    button {
+      padding: 12px 30px;
+      border-radius: 30px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    #yesBtn {
+      background: #ff4d6d;
+      color: white;
+      box-shadow: 0 10px 20px rgba(255,77,109,0.4);
+    }
+
+    #noBtn {
+      background: #ddd;
+      color: #333;
+      position: absolute;
+      left: 140px;
+    }
+
+    .cry {
+      font-size: 12px;
+      margin-top: 6px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="card">
+    <h1 id="title"></h1>
+    <p>You make my world better just by being in it 💕</p>
+
+    <div class="buttons">
+      <button id="yesBtn">Yes 💖</button>
+      <div id="noWrapper">
+        <button id="noBtn">No</button>
+        <div class="cry">pls don't 🥺</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const name = params.get("name") || "Love";
+
+  document.getElementById("title").innerText =
+    `${name}, will you be my Valentine? ❤️`;
+
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+
+  let scale = 1;
+
+  noBtn.addEventListener("mouseover", () => {
+    scale -= 0.12;
+    if (scale < 0.35) scale = 0.35;
+
+    noBtn.style.transform = `scale(${scale})`;
+
+    const x = Math.random() * 200;
+    const y = Math.random() * 40;
+
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+  });
+
+  yesBtn.addEventListener("click", () => {
+    confetti({
+      particleCount: 200,
+      spread: 80,
+      origin: { y: 0.6 }
+    });
+
+    document.getElementById("card").innerHTML = `
+      <h1>💖 Yay ${name}! 💖</h1>
+      <p>
+        mujhe pta tha ki aap na to nahi krogi 😘🥰<br><br>
+        jaldi milege dora ,meri kucchu pucchu😘😘💕
+      </p>
+    `;
+  });
+</script>
+
+</body>
+</html>
